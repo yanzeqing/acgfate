@@ -21,12 +21,12 @@ func Database(connString string) {
 	if err != nil {
 		util.Log().Panic("连接数据库不成功", err)
 	}
-	//设置连接池
-	//空闲
+	// 设置连接池
+	// 空闲
 	db.DB().SetMaxIdleConns(50)
-	//打开
+	// 打开
 	db.DB().SetMaxOpenConns(100)
-	//超时
+	// 超时
 	db.DB().SetConnMaxLifetime(time.Second * 30)
 
 	DB = db
