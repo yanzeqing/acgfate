@@ -35,6 +35,17 @@ func NewRouter() *gin.Engine {
 			// User Routing
 			auth.GET("user/me", api.UserMe)
 			auth.DELETE("user/logout", api.UserLogout)
+
+			// 文章投稿
+			v1.POST("articles", api.CreateArticle)
+			// 文章详情
+			v1.GET("article/:id", api.DetailArticle)
+			// 文章列表
+			v1.GET("articles", api.ListArticle)
+			// 文章更新
+			v1.PUT("article/:id", api.UpdateArticle)
+			// 文章删除
+			v1.DELETE("article/:id", api.DeleteArticle)
 		}
 	}
 	return r
