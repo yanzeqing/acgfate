@@ -1,13 +1,16 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
+	"time"
 )
 
 // User 用户模型
 type User struct {
-	gorm.Model
+	Uid            uint `gorm:"primary_key"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      *time.Time `sql:"index"`
 	UserName       string
 	PasswordDigest string
 	Nickname       string
@@ -26,10 +29,10 @@ const (
 	Suspend string = "suspend"
 )
 
-// GetUser 用ID获取用户
-func GetUser(ID interface{}) (User, error) {
+// GetUser 用UID获取用户
+func GetUser(UID interface{}) (User, error) {
 	var user User
-	result := DB.First(&user, ID)
+	result := DB.First(&user, UID)
 	return user, result.Error
 }
 
@@ -47,4 +50,15 @@ func (user *User) SetPassword(password string) error {
 func (user *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(user.PasswordDigest), []byte(password))
 	return err == nil
+}
+
+// CheckStatus 账号状态判断
+func (user *User) CheckStatus() byte {
+	if user.Status == Suspend {
+		return 1
+	}
+	if user.Status == Inactive {
+		return 2
+	}
+	return 0
 }

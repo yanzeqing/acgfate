@@ -18,7 +18,7 @@ type UserLoginService struct {
 func (service *UserLoginService) setSession(c *gin.Context, user model.User) {
 	s := sessions.Default(c)
 	s.Clear()
-	s.Set("user_id", user.ID)
+	s.Set("uid", user.Uid)
 	_ = s.Save()
 }
 
@@ -32,6 +32,13 @@ func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
 
 	if user.CheckPassword(service.Password) == false {
 		return serializer.ParamErr("账号或密码错误", nil)
+	}
+
+	if user.CheckStatus() == 1 {
+		return serializer.ParamErr("账号被封禁", nil)
+	}
+	if user.CheckStatus() == 2 {
+		return serializer.ParamErr("账号未激活", nil)
 	}
 
 	// 设置session

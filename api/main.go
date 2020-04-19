@@ -8,7 +8,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	validator "gopkg.in/go-playground/validator.v8"
+	"gopkg.in/go-playground/validator.v8"
 )
 
 // Ping 状态检查页面

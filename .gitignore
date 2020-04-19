@@ -1,6 +1,5 @@
 .vscode/
 .idea
 .env
-.env.example
 go.sum
 

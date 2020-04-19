@@ -1,14 +1,18 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 // Article 文章模型
 type Article struct {
-	gorm.Model
-	Aid      uint64
-	Title    string
-	Summary  string
-	Auther   string
-	State    int32
-	Category string
+	Aid       uint64 `gorm:"primary_key"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time `sql:"index"`
+	Title     string
+	Summary   string
+	Auther    string
+	State     int32
+	Category  string
 }

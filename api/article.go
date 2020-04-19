@@ -9,7 +9,7 @@ import (
 func CreateArticle(c *gin.Context) {
 	createArticleService := article.CreateArticleService{}
 	if err := c.ShouldBind(&createArticleService); err == nil {
-		res := createArticleService.Create()
+		res := createArticleService.Create(c)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
