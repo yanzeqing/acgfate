@@ -4,7 +4,7 @@ import "acgfate/model"
 
 // User 用户序列化器
 type User struct {
-	Uid       uint   `json:"uid"`
+	Uid       uint64 `json:"uid"`
 	UserName  string `json:"user_name"`
 	Nickname  string `json:"nickname"`
 	Status    string `json:"status"`

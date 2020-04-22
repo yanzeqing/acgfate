@@ -7,7 +7,7 @@ import (
 
 // User 用户模型
 type User struct {
-	Uid            uint `gorm:"primary_key"`
+	Uid            uint64 `gorm:"primary_key" uri:"uid"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 	DeletedAt      *time.Time `sql:"index"`

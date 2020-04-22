@@ -10,9 +10,9 @@ type DetailArticleService struct {
 }
 
 // Detail 文章详情
-func (service *DetailArticleService) Detail(id string) serializer.Response {
+func (service *DetailArticleService) Detail(aid string) serializer.Response {
 	var article model.Article
-	err := model.DB.First(&article, id).Error
+	err := model.DB.First(&article, aid).Error
 	if err != nil {
 		return serializer.Response{
 			Code:  404,

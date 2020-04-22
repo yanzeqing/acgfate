@@ -3,7 +3,6 @@ package article
 import (
 	"acgfate/model"
 	"acgfate/serializer"
-	"github.com/gin-gonic/gin"
 )
 
 // CreateArticleService 文章投稿服务
@@ -13,23 +12,13 @@ type CreateArticleService struct {
 	Category string `form:"category" json:"category" binding:"required,min=1,max=5"`
 }
 
-// 获取当前用户
-func CurrentUser(c *gin.Context) *model.User {
-	if user, _ := c.Get("user"); user != nil {
-		if u, ok := user.(*model.User); ok {
-			return u
-		}
-	}
-	return nil
-}
-
 // Create 文章创建
-func (service *CreateArticleService) Create(c *gin.Context) serializer.Response {
+func (service *CreateArticleService) Create(user *model.User) serializer.Response {
 	Article := model.Article{
 		Title:    service.Title,
 		Summary:  service.Summary,
-		Auther:   CurrentUser(c).UserName,
 		Category: service.Category,
+		Author:   user.Uid,
 	}
 	err := model.DB.Create(&Article).Error
 	if err != nil {

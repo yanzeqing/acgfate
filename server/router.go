@@ -1,7 +1,7 @@
 package server
 
 import (
-	"acgfate/api"
+	"acgfate/api/v1"
 	"acgfate/middleware"
 	"os"
 
@@ -12,40 +12,37 @@ import (
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
-	// 中间件, 顺序不能改
+	// 中间件, 顺序固定
 	r.Use(middleware.Session(os.Getenv("SESSION_SECRET")))
 	r.Use(middleware.Cors())
 	r.Use(middleware.CurrentUser())
 
 	// 路由
-	v1 := r.Group("/api/v1")
+	r1 := r.Group("/api/v1")
 	{
-		v1.POST("ping", api.Ping)
+		r1.POST("ping", v1.Ping)
 
 		// 用户注册
-		v1.POST("user/register", api.UserRegister)
+		r1.POST("user/register", v1.UserRegister)
 
 		// 用户登录
-		v1.POST("user/login", api.UserLogin)
-
+		r1.POST("user/login", v1.UserLogin)
 		// 需要登录保护的
-		auth := v1.Group("")
+		auth := r1.Group("")
 		auth.Use(middleware.AuthRequired())
 		{
-			// User Routing
-			auth.GET("user/me", api.UserMe)
-			auth.DELETE("user/logout", api.UserLogout)
-			// 文章投稿
-			auth.POST("articles", api.CreateArticle)
-			// 文章详情
-			auth.GET("article/:id", api.DetailArticle)
-			// 文章列表
-			auth.GET("articles", api.ListArticle)
-			// 文章更新
-			auth.PUT("article/:id", api.UpdateArticle)
-			// 文章删除
-			auth.DELETE("article/:id", api.DeleteArticle)
+			// 用户路由
+			auth.GET("user/me", v1.UserMe)
+			auth.DELETE("user/logout", v1.UserLogout)
+			// 文章操作
+			auth.POST("articles", v1.CreateArticle)
+			auth.PUT("article/:aid", v1.UpdateArticle)
+			auth.DELETE("article/:aid", v1.DeleteArticle)
 		}
+		// 文章列表
+		r1.GET("articles/:category", v1.ListArticle)
+		// 文章详情
+		r1.GET("article/:aid", v1.DetailArticle)
 	}
 	return r
 }

@@ -10,7 +10,7 @@ import (
 
 // UserLoginService 管理用户登录的服务
 type UserLoginService struct {
-	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
+	UserName string `form:"user_name" json:"user_name" binding:"required,min=2,max=30"`
 	Password string `form:"password" json:"password" binding:"required,min=8,max=40"`
 }
 
@@ -34,10 +34,10 @@ func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
 		return serializer.ParamErr("账号或密码错误", nil)
 	}
 
-	if user.CheckStatus() == 1 {
+	if user.Status == model.Suspend {
 		return serializer.ParamErr("账号被封禁", nil)
 	}
-	if user.CheckStatus() == 2 {
+	if user.Status == model.Inactive {
 		return serializer.ParamErr("账号未激活", nil)
 	}
 

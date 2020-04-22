@@ -12,9 +12,9 @@ type DeleteArticleService struct {
 }
 
 // Delete 文章删除
-func (service *DeleteArticleService) Delete(id string) serializer.Response {
+func (service *DeleteArticleService) Delete(aid string) serializer.Response {
 	var Article model.Article
-	err := model.DB.First(&Article, id).Error
+	err := model.DB.First(&Article, aid).Error
 	if err != nil {
 		return serializer.Response{
 			Code:  404,

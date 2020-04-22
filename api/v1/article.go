@@ -1,4 +1,4 @@
-package api
+package v1
 
 import (
 	"acgfate/service/article"
@@ -7,9 +7,10 @@ import (
 
 // CreateArticle 文章投稿接口
 func CreateArticle(c *gin.Context) {
+	user := CurrentUser(c)
 	createArticleService := article.CreateArticleService{}
 	if err := c.ShouldBind(&createArticleService); err == nil {
-		res := createArticleService.Create(c)
+		res := createArticleService.Create(user)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
@@ -20,7 +21,7 @@ func CreateArticle(c *gin.Context) {
 func DetailArticle(c *gin.Context) {
 	detailArticleService := article.DetailArticleService{}
 	if err := c.ShouldBind(&detailArticleService); err == nil {
-		res := detailArticleService.Detail(c.Param("id"))
+		res := detailArticleService.Detail(c.Param("aid"))
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
@@ -31,7 +32,7 @@ func DetailArticle(c *gin.Context) {
 func ListArticle(c *gin.Context) {
 	listArticleService := article.ListArticleService{}
 	if err := c.ShouldBind(&listArticleService); err == nil {
-		res := listArticleService.List()
+		res := listArticleService.List(c.Param("category"))
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
@@ -42,7 +43,7 @@ func ListArticle(c *gin.Context) {
 func UpdateArticle(c *gin.Context) {
 	updateArticleService := article.UpdateArticleService{}
 	if err := c.ShouldBind(&updateArticleService); err == nil {
-		res := updateArticleService.Update(c.Param("id"))
+		res := updateArticleService.Update(c.Param("aid"))
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
@@ -53,6 +54,6 @@ func UpdateArticle(c *gin.Context) {
 // DeleteArticle 文章删除接口
 func DeleteArticle(c *gin.Context) {
 	deleteArticleService := article.DeleteArticleService{}
-	res := deleteArticleService.Delete(c.Param("id"))
+	res := deleteArticleService.Delete(c.Param("aid"))
 	c.JSON(200, res)
 }

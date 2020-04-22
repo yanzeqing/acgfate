@@ -10,11 +10,9 @@ type ListArticleService struct {
 }
 
 // List 文章列表
-func (service *ListArticleService) List() serializer.Response {
+func (service *ListArticleService) List(category string) serializer.Response {
 	var articles []model.Article
-
-	err := model.DB.Find(&articles).Error
-
+	err := model.DB.Find(&articles, "category = ?", category).Error
 	if err != nil {
 		return serializer.Response{
 			Code:  50000,

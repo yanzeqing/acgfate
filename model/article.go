@@ -12,7 +12,7 @@ type Article struct {
 	DeletedAt *time.Time `sql:"index"`
 	Title     string
 	Summary   string
-	Auther    string
+	Author    uint64
 	State     int32
 	Category  string
 }

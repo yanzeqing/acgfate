@@ -12,9 +12,9 @@ type UpdateArticleService struct {
 }
 
 // Update 文章更新
-func (service *UpdateArticleService) Update(id string) serializer.Response {
+func (service *UpdateArticleService) Update(aid string) serializer.Response {
 	var article model.Article
-	err := model.DB.First(&article, id).Error
+	err := model.DB.First(&article, aid).Error
 	if err != nil {
 		return serializer.Response{
 			Code:  404,
