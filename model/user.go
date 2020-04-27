@@ -1,8 +1,9 @@
 package model
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 // User 用户模型

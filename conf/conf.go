@@ -1,10 +1,11 @@
 package conf
 
 import (
+	"os"
+
 	"acgfate/cache"
 	"acgfate/model"
 	"acgfate/util"
-	"os"
 
 	"github.com/joho/godotenv"
 )

@@ -5,12 +5,13 @@ import "acgfate/model"
 // Article 文章序列化器
 type Article struct {
 	Aid       uint64 `json:"aid"`
+	Author    User   `json:"author"`
+	CreatedAt int64  `json:"created_at"`
 	Title     string `json:"title"`
 	Summary   string `json:"summary"`
-	Author    User   `json:"author"`
-	State     int32  `json:"state"`
-	Category  string `json:"category"`
-	CreatedAt int64  `json:"created_at"`
+	Content   string `json:"content"`
+	Category  uint16 `json:"category"`
+	Status    string `json:"status"`
 }
 
 // BuildArticle 序列化文章
@@ -18,12 +19,13 @@ func BuildArticle(item model.Article) Article {
 	author, _ := model.GetUser(item.Author)
 	return Article{
 		Aid:       item.Aid,
+		Author:    BuildUser(author),
+		CreatedAt: item.CreatedAt.Unix(),
 		Title:     item.Title,
 		Summary:   item.Summary,
-		Author:    BuildUser(author),
-		State:     item.State,
+		Content:   item.Content,
 		Category:  item.Category,
-		CreatedAt: item.CreatedAt.Unix(),
+		Status:    item.Status,
 	}
 }
 

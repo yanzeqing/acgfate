@@ -1,8 +1,9 @@
 package model
 
 import (
-	"acgfate/util"
 	"time"
+
+	"acgfate/util"
 
 	"github.com/jinzhu/gorm"
 

@@ -1,9 +1,10 @@
 package cache
 
 import (
-	"acgfate/util"
 	"os"
 	"strconv"
+
+	"acgfate/util"
 
 	"github.com/go-redis/redis"
 )

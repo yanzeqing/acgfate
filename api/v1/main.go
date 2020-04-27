@@ -1,11 +1,12 @@
 package v1
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"acgfate/conf"
 	"acgfate/model"
 	"acgfate/serializer"
-	"encoding/json"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/go-playground/validator.v8"

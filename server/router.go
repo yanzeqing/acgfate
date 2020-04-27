@@ -1,9 +1,10 @@
 package server
 
 import (
+	"os"
+
 	"acgfate/api/v1"
 	"acgfate/middleware"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
