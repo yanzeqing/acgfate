@@ -12,5 +12,6 @@ require (
 	golang.org/x/crypto v0.0.0-20200414173820-0848c9571904
 	golang.org/x/tools v0.0.0-20200417140056-c07e33ef3290 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
+	github.com/go-playground/validator/v10 v10.3.0
 	gopkg.in/yaml.v2 v2.2.8
 )
