@@ -37,5 +37,6 @@ func (service *UpdateArticleService) Update(aid string) serializer.Response {
 
 	return serializer.Response{
 		Data: serializer.BuildArticle(article),
+		Msg:  "文章更新成功",
 	}
 }

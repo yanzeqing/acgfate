@@ -31,6 +31,8 @@ const (
 	CodeEncryptError = 50002
 	// CodeParamErr 各种奇奇怪怪的参数错误
 	CodeParamErr = 40001
+	// CodeUserErr 用户错误操作
+	CodeUserErr = 40003
 )
 
 // CheckLogin 检查登录
@@ -68,4 +70,12 @@ func ParamErr(msg string, err error) Response {
 		msg = "参数错误"
 	}
 	return Err(CodeParamErr, msg, err)
+}
+
+// UserErr 用户操作错误
+func UserErr(msg string, err error) Response {
+	if msg == "" {
+		msg = "违规操作"
+	}
+	return Err(CodeUserErr, msg, err)
 }

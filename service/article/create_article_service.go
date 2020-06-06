@@ -18,7 +18,7 @@ func (service *CreateArticleService) articleValid() *serializer.Response {
 	if _, ok := model.Category[service.Category]; !ok {
 		return &serializer.Response{
 			Code: 40008,
-			Msg:  "分区错误",
+			Msg:  "文章分区错误",
 		}
 	}
 	return nil
@@ -49,5 +49,6 @@ func (service *CreateArticleService) Create(user *model.User) serializer.Respons
 
 	return serializer.Response{
 		Data: serializer.BuildArticle(Article),
+		Msg:  "文章投稿成功",
 	}
 }

@@ -12,9 +12,10 @@ type DeleteArticleService struct {
 }
 
 // Delete 文章删除
-func (service *DeleteArticleService) Delete(aid string) serializer.Response {
-	var Article model.Article
-	err := model.DB.First(&Article, aid).Error
+func (service *DeleteArticleService) Delete(aid string, user *model.User) serializer.Response {
+	var article model.Article
+
+	err := model.DB.First(&article, aid).Error
 	if err != nil {
 		return serializer.Response{
 			Code:  404,
@@ -22,8 +23,11 @@ func (service *DeleteArticleService) Delete(aid string) serializer.Response {
 			Error: err.Error(),
 		}
 	}
-
-	err = model.DB.Delete(&Article).Error
+	err = model.DB.First(&article, aid).Select("author").Error
+	if article.Author != user.Uid {
+		return serializer.UserErr("", err)
+	}
+	err = model.DB.Delete(&article).Error
 	if err != nil {
 		return serializer.Response{
 			Code:  50004,
@@ -32,5 +36,7 @@ func (service *DeleteArticleService) Delete(aid string) serializer.Response {
 		}
 	}
 
-	return serializer.Response{}
+	return serializer.Response{
+		Msg: "文章删除成功",
+	}
 }

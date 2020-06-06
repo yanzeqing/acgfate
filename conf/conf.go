@@ -3,7 +3,6 @@ package conf
 import (
 	"os"
 
-	"acgfate/cache"
 	"acgfate/model"
 	"acgfate/util"
 
@@ -25,5 +24,5 @@ func Init() {
 
 	// 连接数据库
 	model.Database(os.Getenv("MYSQL_DSN"))
-	cache.Redis()
+	// cache.Redis()
 }

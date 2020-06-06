@@ -1,4 +1,4 @@
-package service
+package user
 
 import (
 	"acgfate/model"
@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UserLoginService 管理用户登录的服务
-type UserLoginService struct {
+// LoginService 管理用户登录的服务
+type LoginService struct {
 	UserName string `form:"user_name" json:"user_name" binding:"required,min=2,max=30"`
 	Password string `form:"password" json:"password" binding:"required,min=8,max=40"`
 }
 
 // setSession 设置session
-func (service *UserLoginService) setSession(c *gin.Context, user model.User) {
+func (service *LoginService) setSession(c *gin.Context, user model.User) {
 	s := sessions.Default(c)
 	s.Clear()
 	s.Set("uid", user.Uid)
@@ -23,7 +23,7 @@ func (service *UserLoginService) setSession(c *gin.Context, user model.User) {
 }
 
 // Login 用户登录函数
-func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
+func (service *LoginService) Login(c *gin.Context) serializer.Response {
 	var user model.User
 
 	if err := model.DB.Where("user_name = ?", service.UserName).First(&user).Error; err != nil {

@@ -2,14 +2,14 @@ package v1
 
 import (
 	"acgfate/serializer"
-	"acgfate/service"
+	"acgfate/service/user"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
 // UserRegister 用户注册接口
 func UserRegister(c *gin.Context) {
-	var registerService service.UserRegisterService
+	var registerService user.RegisterService
 	if err := c.ShouldBind(&registerService); err == nil {
 		res := registerService.Register()
 		c.JSON(200, res)
@@ -20,7 +20,7 @@ func UserRegister(c *gin.Context) {
 
 // UserLogin 用户登录接口
 func UserLogin(c *gin.Context) {
-	var loginService service.UserLoginService
+	var loginService user.LoginService
 	if err := c.ShouldBind(&loginService); err == nil {
 		res := loginService.Login(c)
 		c.JSON(200, res)
@@ -31,8 +31,8 @@ func UserLogin(c *gin.Context) {
 
 // UserMe 用户详情
 func UserMe(c *gin.Context) {
-	user := CurrentUser(c)
-	res := serializer.BuildUserResponse(*user)
+	currentUser := CurrentUser(c)
+	res := serializer.BuildUserResponse(*currentUser)
 	c.JSON(200, res)
 }
 

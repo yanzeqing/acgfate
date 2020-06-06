@@ -2,7 +2,7 @@ package main
 
 import (
 	"acgfate/conf"
-	"acgfate/server"
+	"acgfate/router"
 )
 
 func main() {
@@ -10,6 +10,6 @@ func main() {
 	conf.Init()
 
 	// 装载路由
-	r := server.NewRouter()
+	r := router.NewRouter()
 	_ = r.Run(":3000")
 }
